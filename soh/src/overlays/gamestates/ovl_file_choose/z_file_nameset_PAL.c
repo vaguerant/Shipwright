@@ -372,7 +372,7 @@ void FileChoose_DrawNameEntry(GameState* thisx) {
             // place cursor on END button
             this->kbdY = 5;
             this->kbdX = 4;
-        } else if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+        } else if (CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
             if ((this->newFileNameCharCount == 7) && (filename[7] != 0x3E)) {
                 for (i = this->newFileNameCharCount; i < 7; i++) {
                     filename[i] = filename[i + 1];
@@ -680,7 +680,7 @@ void FileChoose_UpdateOptionsMenu(GameState* thisx) {
     Input* input = &this->state.input[0];
     bool dpad = CVar_GetS32("gDpadPauseName", 0);
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+    if (CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         Audio_PlaySoundGeneral(NA_SE_SY_FSEL_DECIDE_L, &D_801333D4, 4, &D_801333E0, &D_801333E0, &D_801333E8);
         this->configMode = CM_OPTIONS_TO_MAIN;
         osSyncPrintf("ＳＡＶＥ");

@@ -500,7 +500,7 @@ void Cutscene_Command_Terminator(GlobalContext* globalCtx, CutsceneContext* csCt
     if ((gSaveContext.gameMode != 0) && (gSaveContext.gameMode != 3) && (globalCtx->sceneNum != SCENE_SPOT00) &&
         (csCtx->frames > 20) &&
         (CHECK_BTN_ALL(globalCtx->state.input[0].press.button, BTN_A) ||
-         CHECK_BTN_ALL(globalCtx->state.input[0].press.button, BTN_B) ||
+         CHECK_BTN_ALL(globalCtx->state.input[0].press.button, CVar_GetS32("gCustomBtnCancel", BTN_B)) ||
          CHECK_BTN_ALL(globalCtx->state.input[0].press.button, BTN_START)) &&
         (gSaveContext.fileNum != 0xFEDC) && (globalCtx->sceneLoadFlag == 0)) {
         Audio_PlaySoundGeneral(NA_SE_SY_PIECE_OF_HEART, &D_801333D4, 4, &D_801333E0, &D_801333E0, &D_801333E8);

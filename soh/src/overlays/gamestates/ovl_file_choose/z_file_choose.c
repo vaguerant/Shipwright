@@ -1617,7 +1617,7 @@ void FileChoose_ConfirmFile(GameState* thisx) {
             Audio_PlaySoundGeneral(NA_SE_SY_FSEL_CLOSE, &D_801333D4, 4, &D_801333E0, &D_801333E0, &D_801333E8);
             this->selectMode++;
         }
-    } else if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+    } else if (CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         Audio_PlaySoundGeneral(NA_SE_SY_FSEL_CLOSE, &D_801333D4, 4, &D_801333E0, &D_801333E0, &D_801333E8);
         this->selectMode++;
     } else if ((ABS(this->stickRelY) >= 30) || (dpad && CHECK_BTN_ANY(input->press.button, BTN_DDOWN | BTN_DUP))) {

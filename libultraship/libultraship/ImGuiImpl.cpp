@@ -68,7 +68,19 @@ namespace SohImGui {
     static ImVector<ImRect> s_GroupPanelLabelStack;
     bool p_open = false;
     bool needs_save = false;
+    int lastCancelID = 0;
     int lastBackendID = 0;
+
+    std::pair<int, const char*> cancels[] = {
+        { BTN_B, "B" },
+        { BTN_CUP, "C-Up" },
+        { BTN_CDOWN, "C-Down" },
+        { BTN_CLEFT, "C-Left" },
+        { BTN_CRIGHT, "C-Right" },
+        { BTN_L, "L" },
+        { BTN_R, "R" },
+        { BTN_Z, "Z" },
+    };
 
     const char* filters[3] = {
         "Three-Point",
@@ -99,6 +111,15 @@ namespace SohImGui {
     std::map<std::string, std::vector<std::string>> hiddenwindowCategories;
     std::map<std::string, std::vector<std::string>> windowCategories;
     std::map<std::string, CustomWindow> customWindows;
+
+    int GetCancelID(int cancel) {
+        for (size_t i = 0; i < (sizeof(cancels) / sizeof(cancels[0])); i++) {
+            if(cancel == cancels[i].first) {
+				return i;
+			}
+        }
+        return 0;
+    }
 
     int GetBackendID(std::shared_ptr<Mercury> cfg) {
         std::string backend = cfg->getString("Window.GfxBackend");
@@ -340,6 +361,7 @@ namespace SohImGui {
         io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io->Fonts->AddFontDefault();
 
+        lastCancelID = GetCancelID(CVar_GetS32("gCustomBtnCancel", BTN_B));
         lastBackendID = GetBackendID(GlobalCtx2::GetInstance()->GetConfig());
         if (CVar_GetS32("gOpenMenuBar", 0) != 1) {
             SohImGui::overlay->TextDrawNotification(30.0f, true, "Press F1 to access enhancements menu");
@@ -846,6 +868,18 @@ namespace SohImGui {
                 Tooltip("Allows the D-pad to be used as extra C buttons");
                 EnhancementCheckbox("Answer Navi Prompt with L Button", "gNaviOnL");
                 Tooltip("Speak to Navi with L but enter first-person camera with C-Up");
+                ImGui::Text("Cancel Button");
+                Tooltip("Select which button cancels menu selections\nwithout changing other B-button functions");
+                if (ImGui::BeginCombo("##CancelBtn", cancels[lastCancelID].second)) {
+                    for (uint8_t i = 0; i < sizeof(cancels) / sizeof(cancels[0]); i++) {
+                        if (ImGui::Selectable(cancels[i].second, i == lastCancelID)) {
+                            CVar_SetS32("gCustomBtnCancel", cancels[i].first);
+                            lastCancelID = i;
+                            needs_save = true;
+                        }
+                    }
+                    ImGui::EndCombo();
+                }
                 ImGui::Separator();
 
                 EnhancementCheckbox("Show Inputs", "gInputEnabled");

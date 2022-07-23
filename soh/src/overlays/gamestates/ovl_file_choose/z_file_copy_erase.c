@@ -64,7 +64,7 @@ void FileChoose_SelectCopySource(GameState* thisx) {
     bool dpad = CVar_GetS32("gDpadPauseName", 0);
 
     if (((this->buttonIndex == FS_BTN_COPY_QUIT) && CHECK_BTN_ANY(input->press.button, BTN_A | BTN_START)) ||
-        CHECK_BTN_ALL(input->press.button, BTN_B)) {
+        CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         this->actionTimer = 8;
         this->buttonIndex = FS_BTN_MAIN_COPY;
         this->nextTitleLabel = FS_TITLE_SELECT_FILE;
@@ -176,7 +176,7 @@ void FileChoose_SelectCopyDest(GameState* thisx) {
     bool dpad = CVar_GetS32("gDpadPauseName", 0);
 
     if (((this->buttonIndex == FS_BTN_COPY_QUIT) && CHECK_BTN_ANY(input->press.button, BTN_A | BTN_START)) ||
-        CHECK_BTN_ALL(input->press.button, BTN_B)) {
+        CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         this->buttonIndex = this->selectedFileIndex;
         this->nextTitleLabel = FS_TITLE_COPY_FROM;
         this->actionTimer = 8;
@@ -360,7 +360,7 @@ void FileChoose_CopyConfirm(GameState* thisx) {
     bool dpad = CVar_GetS32("gDpadPauseName", 0);
 
     if (((this->buttonIndex != FS_BTN_CONFIRM_YES) && CHECK_BTN_ANY(input->press.button, BTN_A | BTN_START)) ||
-        CHECK_BTN_ALL(input->press.button, BTN_B)) {
+        CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         this->actionTimer = 8;
         this->nextTitleLabel = FS_TITLE_COPY_TO;
         this->configMode = CM_RETURN_TO_COPY_DEST;
@@ -492,7 +492,7 @@ void FileChoose_CopyAnim3(GameState* thisx) {
     this->actionTimer--;
 
     if (this->actionTimer < 74) {
-        if (CHECK_BTN_ANY(input->press.button, BTN_A | BTN_B | BTN_START) || (this->actionTimer == 0)) {
+        if (CHECK_BTN_ANY(input->press.button, BTN_A | CVar_GetS32("gCustomBtnCancel", BTN_B) | BTN_START) || (this->actionTimer == 0)) {
             this->actionTimer = 8;
             this->nextTitleLabel = FS_TITLE_SELECT_FILE;
             this->configMode++;
@@ -678,7 +678,7 @@ void FileChoose_EraseSelect(GameState* thisx) {
     bool dpad = CVar_GetS32("gDpadPauseName", 0);
 
     if (((this->buttonIndex == FS_BTN_COPY_QUIT) && CHECK_BTN_ANY(input->press.button, BTN_A | BTN_START)) ||
-        CHECK_BTN_ALL(input->press.button, BTN_B)) {
+        CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         this->buttonIndex = FS_BTN_MAIN_ERASE;
         this->actionTimer = 8;
         this->nextTitleLabel = FS_TITLE_SELECT_FILE;
@@ -815,7 +815,7 @@ void FileChoose_EraseConfirm(GameState* thisx) {
     bool dpad = CVar_GetS32("gDpadPauseName", 0);
 
     if (((this->buttonIndex != FS_BTN_CONFIRM_YES) && CHECK_BTN_ANY(input->press.button, BTN_A | BTN_START)) ||
-        CHECK_BTN_ALL(input->press.button, BTN_B)) {
+        CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         this->buttonIndex = this->selectedFileIndex;
         this->nextTitleLabel = FS_TITLE_ERASE_FILE;
         this->configMode = CM_EXIT_TO_ERASE_SELECT_1;
@@ -954,7 +954,7 @@ void FileChoose_EraseAnim2(GameState* thisx) {
     FileChooseContext* this = (FileChooseContext*)thisx;
     Input* input = &this->state.input[0];
 
-    if (CHECK_BTN_ANY(input->press.button, BTN_A | BTN_B | BTN_START) || (--this->actionTimer == 0)) {
+    if (CHECK_BTN_ANY(input->press.button, BTN_A | CVar_GetS32("gCustomBtnCancel", BTN_B) | BTN_START) || (--this->actionTimer == 0)) {
         this->buttonYOffsets[3] = 0;
         this->actionTimer = 8;
         this->nextTitleLabel = FS_TITLE_SELECT_FILE;

@@ -668,7 +668,7 @@ void EnOssan_EndInteraction(GlobalContext* globalCtx, EnOssan* this) {
 }
 
 s32 EnOssan_TestEndInteraction(EnOssan* this, GlobalContext* globalCtx, Input* input) {
-    if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+    if (CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         EnOssan_EndInteraction(globalCtx, this);
         return true;
     } else {
@@ -677,7 +677,7 @@ s32 EnOssan_TestEndInteraction(EnOssan* this, GlobalContext* globalCtx, Input* i
 }
 
 s32 EnOssan_TestCancelOption(EnOssan* this, GlobalContext* globalCtx, Input* input) {
-    if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+    if (CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B))) {
         this->stateFlag = this->tempStateFlag;
         Message_ContinueTextbox(globalCtx, this->shelfSlots[this->cursorIndex]->actor.textId);
         return true;

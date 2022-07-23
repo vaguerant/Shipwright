@@ -171,8 +171,8 @@ void Message_UpdateOcarinaGame(GlobalContext* globalCtx) {
 u8 Message_ShouldAdvance(GlobalContext* globalCtx) {
     Input* input = &globalCtx->state.input[0];
 
-    bool isB_Held = CVar_GetS32("gSkipText", 0) != 0 ? CHECK_BTN_ALL(input->cur.button, BTN_B)
-                                                     : CHECK_BTN_ALL(input->press.button, BTN_B);
+    bool isB_Held = CVar_GetS32("gSkipText", 0) != 0 ? CHECK_BTN_ALL(input->cur.button, CVar_GetS32("gCustomBtnCancel", BTN_B))
+                                                     : CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B));
 
     if (CHECK_BTN_ALL(input->press.button, BTN_A) || isB_Held || CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
         Audio_PlaySoundGeneral(NA_SE_SY_MESSAGE_PASS, &D_801333D4, 4, &D_801333E0, &D_801333E0, &D_801333E8);
@@ -183,8 +183,8 @@ u8 Message_ShouldAdvance(GlobalContext* globalCtx) {
 u8 Message_ShouldAdvanceSilent(GlobalContext* globalCtx) {
     Input* input = &globalCtx->state.input[0];
 
-    bool isB_Held = CVar_GetS32("gSkipText", 0) != 0 ? CHECK_BTN_ALL(input->cur.button, BTN_B)
-                                                     : CHECK_BTN_ALL(input->press.button, BTN_B);
+    bool isB_Held = CVar_GetS32("gSkipText", 0) != 0 ? CHECK_BTN_ALL(input->cur.button, CVar_GetS32("gCustomBtnCancel", BTN_B))
+                                                     : CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B));
 
     return CHECK_BTN_ALL(input->press.button, BTN_A) || isB_Held || CHECK_BTN_ALL(input->press.button, BTN_CUP);
 }
@@ -3365,8 +3365,8 @@ void Message_Update(GlobalContext* globalCtx) {
         return;
     }
 
-    bool isB_Held = CVar_GetS32("gSkipText", 0) != 0 ? CHECK_BTN_ALL(input->cur.button, BTN_B) && !sTextboxSkipped
-                                                     : CHECK_BTN_ALL(input->press.button, BTN_B);
+    bool isB_Held = CVar_GetS32("gSkipText", 0) != 0 ? CHECK_BTN_ALL(input->cur.button, CVar_GetS32("gCustomBtnCancel", BTN_B)) && !sTextboxSkipped
+                                                     : CHECK_BTN_ALL(input->press.button, CVar_GetS32("gCustomBtnCancel", BTN_B));
 
     switch (msgCtx->msgMode) {
         case MSGMODE_TEXT_START:
